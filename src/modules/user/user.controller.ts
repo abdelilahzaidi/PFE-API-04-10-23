@@ -23,6 +23,8 @@ export class UserController {
         
         return await this.userService.all()
     }
+    @UseGuards(StatusGuard)
+    @Status(UserStatus.ADMIN)
     @Post()
     async createUser(@Body() dto : UserCreateDTO):Promise<UserEntity>{        
         console.log('DTO in controler ',dto)
@@ -41,10 +43,14 @@ export class UserController {
         console.log(messages)
         return messages
     }
+    @UseGuards(StatusGuard)
+    @Status(UserStatus.ADMIN)
     @Delete(':id')   
     async delete(@Param('id') id: number) {
         return this.userService.delete(id);
     }
+    @UseGuards(StatusGuard)
+    @Status(UserStatus.ADMIN)
     @Put(':id')    
     async update(
         @Param('id') id: number,

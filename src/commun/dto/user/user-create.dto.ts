@@ -37,7 +37,7 @@ export class UserCreateDTO{
   
     @IsNotEmpty()
     @IsBoolean()
-    actif: boolean; 
+    actif?: boolean; 
     
   
     @IsNotEmpty()

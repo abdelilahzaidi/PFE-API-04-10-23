@@ -1,27 +1,13 @@
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidationArguments,
-} from 'class-validator';
+import { registerDecorator } from 'class-validator';
 
-export function IsGreaterThanDate(
-  property: string,
-  validationOptions?: ValidationOptions,
-) {
-  return function (object: Object, propertyName: string) {
+export function Compare(validate: (obj) => boolean , opts: { message: string }): PropertyDecorator {
+  return ({constructor}, property: string) => {
     registerDecorator({
-      name: 'isGreaterThanDate',
-      target: object.constructor,
-      propertyName: propertyName,
-      constraints: [property],
-      options: validationOptions,
-      validator: {
-        validate(value: any, args: ValidationArguments) {
-          const [relatedPropertyName] = args.constraints;
-          const relatedValue = (args.object as any)[relatedPropertyName];
-          return new Date(value) > new Date(relatedValue);
-        },
-      },
-    });
-  };
+      name: 'Compare',
+      propertyName: property,
+      target: constructor,
+      options: opts,
+      validator: { validate(v: any, {object}) { return validate(object) } }
+    })
+  }
 }

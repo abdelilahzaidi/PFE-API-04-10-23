@@ -1,9 +1,9 @@
 import { DateCourService } from './../date-cour/date-cour.service';
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SeanceCreateDTO } from 'src/commun/dto/seance/seance-create.dto';
 import { SeanceEntity } from 'src/commun/entities/seance/seance';
-import { Repository } from 'typeorm';
+import { Repository, ServerCapabilities } from 'typeorm';
 import { CourService } from '../cour/cour.service';
 import { HoraireService } from '../horaire/horaire.service';
 import {MoreThan} from 'typeorm';
@@ -12,6 +12,8 @@ import { HoraireEntity } from 'src/commun/entities/horaire/horaire';
 
 @Injectable()
 export class SeanceService {
+  private readonly logger = new Logger(SeanceService.name);
+
     constructor(
         @InjectRepository(SeanceEntity) private readonly seanceRepository :Repository<SeanceEntity>,
         private readonly dateCourService : DateCourService,
@@ -31,19 +33,17 @@ export class SeanceService {
 
     async createSeance(dto: SeanceCreateDTO): Promise<SeanceEntity | null>  {
         try {
+          this.logger.debug(`${JSON.stringify(dto)}`)
           const dateCour = await this.dateCourService.findDateCourById(dto.idDateCour)
-          if (!dateCour) {
-            throw new ConflictException('Cette dateCour existe déjà.');
+          if (dateCour) {
+            throw new ConflictException('Cette date de Cour existe déjà.');
           }
 
           const cour = await this.courService.findCourById(dto.idCour)
-          if (!cour) {
-            throw new ConflictException('Cette dateCour existe déjà.');
-          }
 
-          const horaire = await this.horaireService.findHoraireById(dto.idHoraire)
+           const horaire = await this.horaireService.findHoraireById(dto.idHoraire)
           if (!horaire) {
-            throw new ConflictException('Cette dateCour existe déjà.');
+            throw new ConflictException('Cet horaire existe déjà.');
           }          
     
           const seance = new SeanceEntity();
@@ -62,6 +62,11 @@ export class SeanceService {
           );
         }
       }
+
+
+
+   
+    
 
 
     async findOneById(id: number): Promise<SeanceEntity> {

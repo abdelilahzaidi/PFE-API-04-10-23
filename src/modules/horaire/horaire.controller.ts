@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateHoraireDto } from 'src/commun/dto/horaire/create-horaire.dto';
 import { HoraireService } from './horaire.service';
 import { HoraireEntity } from 'src/commun/entities/horaire/horaire';
+import { UserStatus } from 'src/commun/enums/status.enum';
+import { Status } from 'src/shared/security/status.decorator';
+import { StatusGuard } from 'src/shared/security/status.guard';
 
 @Controller('horaire')
 export class HoraireController {
@@ -13,6 +16,8 @@ export class HoraireController {
     async all():Promise<HoraireEntity[]>{
         return await this.horaireService.all()
     }
+    @UseGuards(StatusGuard)
+    @Status(UserStatus.ADMIN)
     @Post()
     async create(@Body() dto : CreateHoraireDto): Promise<HoraireEntity> {
       console.log(dto)

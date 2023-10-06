@@ -8,14 +8,17 @@ import { MessageEntity } from 'src/commun/entities/message/message';
 import { SeanceEntity } from 'src/commun/entities/seance/seance';
 import { SeanceModule } from '../seance/seance.module';
 import { SeanceUserEntity } from 'src/commun/entities/seance_user/seance-user';
+import { HoraireEntity } from 'src/commun/entities/horaire/horaire';
+import { HoraireModule } from '../horaire/horaire.module';
 
 
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([UserEntity, MessageEntity,SeanceEntity,SeanceUserEntity]),   
+    TypeOrmModule.forFeature([UserEntity, MessageEntity,SeanceEntity,SeanceUserEntity,HoraireEntity]),   
     forwardRef(() => LevelModule),  
-    forwardRef(() => SeanceModule)
+    forwardRef(() => SeanceModule),
+    forwardRef(()=>HoraireModule)
     
   ],
   providers: [UserService],

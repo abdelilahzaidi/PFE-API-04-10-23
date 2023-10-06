@@ -122,7 +122,7 @@ export class UserService {
   }
 
   async findOneById(id: number): Promise<any> {
-    return await this.userRepository.find({where:{id}, select:['id','first_name','last_name','gender','birthDate','rue','commune','ville','actif','gsm','email','status'],relations:['level']});
+    return await this.userRepository.findOne({where:{id}, select:['id','first_name','last_name','gender','birthDate','rue','commune','ville','actif','gsm','email','status'],relations:['level']});
   }
 
   // async findOneById(id: number): Promise<any> {

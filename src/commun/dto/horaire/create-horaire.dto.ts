@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { IsGreaterThanDate } from "src/shared/security/decorators/isGreaterThanDate.decorator";
+import { Compare } from "src/shared/security/decorators/isGreaterThanDate.decorator";
 
 
 export class CreateHoraireDto {
@@ -7,9 +7,7 @@ export class CreateHoraireDto {
     heureDebut: Date;   
     
     @IsNotEmpty()
-
-    @IsGreaterThanDate('heureDebut',{ message: "heureFin doit etre plus grand qu'heureDebut" })
-
+    @Compare(({heureDebut, heureFin}: CreateHoraireDto) => heureDebut < heureFin, { message: "L'heure de fin de l'horaire doit etre postérieur à l'heure de début de l'horaire" })
     heureFin: Date; 
 
     @IsNotEmpty()
