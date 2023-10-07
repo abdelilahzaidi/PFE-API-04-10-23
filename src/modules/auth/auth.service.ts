@@ -7,11 +7,12 @@ import { LoginDTO } from 'src/commun/dto/auth/login.dto';
 import { SignUpDTO } from 'src/commun/dto/auth/signup.dto';
 import { UserEntity } from 'src/commun/entities/user/user';
 import JwtFeature from 'src/shared/security/jwtFeature.utils';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private userService: UserService,
+        private userService: UserService,       
         private jwtService: JwtService) {}
     
 
@@ -23,6 +24,12 @@ async signup(signUpDto: SignUpDTO): Promise<UserEntity> {
         throw new BadRequestException('Passwords do not match!');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
+
+    const userFound = await this.userService.findOneByEmail(signUpDto.email)
+      if (userFound) {signUpDto
+        console.log('49')
+        throw new ConflictException('Cette adresse e-mail est déjà utilisée.');
+      }
 
     try {
         const user = await this.userService.create({

@@ -108,8 +108,6 @@ export class UserService {
         "Une erreur est survenue lors de la modification de l'utilisateur.",
       );
     }
-
-
   }
 
   async delete(id: number): Promise<any> {

@@ -48,4 +48,7 @@ export class ProgramService {
   ): Promise<ProgramEntity | undefined> {
     return this.programRepository.findOne({ where: { title } });
   }
+  async update(id: number, data): Promise<any> {
+    return this.programRepository.update(id, data);
+  }
 }

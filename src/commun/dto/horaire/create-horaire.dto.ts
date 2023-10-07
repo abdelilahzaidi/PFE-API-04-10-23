@@ -11,6 +11,6 @@ export class CreateHoraireDto {
     heureFin: Date; 
 
     @IsNotEmpty()
-    jour: Date; 
+    jour: string; 
     
 }

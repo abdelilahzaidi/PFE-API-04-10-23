@@ -17,7 +17,7 @@ export class HoraireEntity {
   @Column({type : 'time'})
   heureFin: Date;
   @Column()
-  jour: Date;
+  jour: string;
   @OneToMany(() => SeanceEntity, (seance) => seance.horaire)
   seances: SeanceEntity[];
 }

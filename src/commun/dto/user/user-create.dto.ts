@@ -19,7 +19,7 @@ export class UserCreateDTO{
 
 
     @IsNotEmpty()
-    @IsIn(['male', 'female'], { message: 'Invalid gender' }) 
+    @IsIn(['male', 'female','no_precis'], { message: 'Invalid gender' }) 
     gender: UserGender;
   
     @IsNotEmpty()
