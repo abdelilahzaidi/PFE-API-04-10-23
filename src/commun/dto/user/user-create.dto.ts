@@ -15,7 +15,7 @@ export class UserCreateDTO{
   
     @IsNotEmpty()
     @IsIn(['member', 'admin','responsable'], { message: 'Invalid status' }) 
-    status: UserStatus;
+    status?: UserStatus;
 
 
     @IsNotEmpty()

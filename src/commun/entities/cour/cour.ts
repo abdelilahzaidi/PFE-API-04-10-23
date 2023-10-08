@@ -11,8 +11,10 @@ export class CourEntity{
     objectifDuCour: string;
 
    
-    @ManyToOne(() => LieuEntity, lieu => lieu.id, { nullable: true })
+    @ManyToOne(() => LieuEntity, lieu => lieu.id, { nullable: true, onDelete: 'CASCADE' })
     lieu: LieuEntity;
+    
+    
 
     @OneToMany(() => SeanceEntity, (seance) => seance.cour)
     seances: SeanceEntity[];

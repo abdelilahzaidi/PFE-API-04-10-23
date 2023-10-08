@@ -88,7 +88,6 @@ export class UserService {
       user.last_name = dto.last_name;
       user.email = dto.email;
       user.gender = dto.gender;
-
       user.rue = dto.rue;
       user.commune = dto.commune;
       user.ville = dto.ville;
