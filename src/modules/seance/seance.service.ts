@@ -6,8 +6,6 @@ import { SeanceEntity } from 'src/commun/entities/seance/seance';
 import { Repository, ServerCapabilities } from 'typeorm';
 import { CourService } from '../cour/cour.service';
 import { HoraireService } from '../horaire/horaire.service';
-import {MoreThan} from 'typeorm';
-import { HoraireEntity } from 'src/commun/entities/horaire/horaire';
 
 
 @Injectable()
@@ -62,12 +60,6 @@ export class SeanceService {
           );
         }
       }
-
-
-
-   
-    
-
 
     async findOneById(id: number): Promise<SeanceEntity> {
         return this.seanceRepository.findOne({where:{id}, relations:["horaire"]});

@@ -51,4 +51,7 @@ export class ProgramService {
   async update(id: number, data): Promise<any> {
     return this.programRepository.update(id, data);
   }
+  async delete(id: number): Promise<any> {
+    return this.programRepository.delete(id);
+  }
 }

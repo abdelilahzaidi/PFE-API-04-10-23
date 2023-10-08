@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { LieuService } from './lieu.service';
 import { LieuEntity } from 'src/commun/entities/lieu/lieu';
 import { CreateLieuDto } from 'src/commun/dto/lieu/lieu-create.dto';
+import { UserStatus } from 'src/commun/enums/status.enum';
+import { Status } from 'src/shared/security/status.decorator';
+import { StatusGuard } from 'src/shared/security/status.guard';
 
 @Controller('lieu')
 export class LieuController {
@@ -23,4 +26,29 @@ export class LieuController {
     async getLieuById(@Param('id') id: number){
         return this.lieuService.findLieuById(id)
     }
+
+    @UseGuards(StatusGuard)
+    @Status(UserStatus.ADMIN)
+    @Delete(':id')   
+    async delete(@Param('id') id: number) {
+        return this.lieuService.delete(id);
+    }
+
+    @UseGuards(StatusGuard)
+    @Status(UserStatus.ADMIN)
+    @Put(':id')    
+    async update(
+        @Param('id') id: number,
+        @Body() body
+    ) {
+        const { ...data} = body;
+        
+        await this.lieuService.update(id, {
+            ...data,
+           
+        });
+  
+        return this.lieuService.findLieuById(id);
+    }
+    
 }

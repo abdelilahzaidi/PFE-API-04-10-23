@@ -39,4 +39,11 @@ export class LieuService {
   async findLieuById(id: number): Promise<LieuEntity | undefined> {
     return this.lieuRepository.findOne({ where: { id } });
   }
+  async delete(id: number): Promise<any> {
+    return this.lieuRepository.delete(id);
+  }
+
+  async update(id: number, data): Promise<any> {
+    return this.lieuRepository.update(id, data);
+  }
 }

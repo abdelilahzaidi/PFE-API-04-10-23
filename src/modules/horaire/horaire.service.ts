@@ -56,6 +56,10 @@ export class HoraireService {
     return this.horaireRepository.findOne({ where: { id } });
   }
 
+  async delete(id: number): Promise<any> {
+    return this.horaireRepository.delete(id);
+  }
+
 }
 
 

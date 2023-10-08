@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateHoraireDto } from 'src/commun/dto/horaire/create-horaire.dto';
 import { HoraireService } from './horaire.service';
 import { HoraireEntity } from 'src/commun/entities/horaire/horaire';
@@ -27,5 +27,12 @@ export class HoraireController {
     @Get(':id')
     async getLieuById(@Param('id') id: number){
         return this.horaireService.findHoraireById(id)
+    }
+
+    @UseGuards(StatusGuard)
+    @Status(UserStatus.ADMIN)
+    @Delete(':id')   
+    async delete(@Param('id') id: number) {
+        return this.horaireService.delete(id);
     }
 }

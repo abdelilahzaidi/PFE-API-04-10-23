@@ -41,7 +41,14 @@ export class CourService {
           );
         }
     }    
+      // async findCourById(id: number): Promise<CourEntity | undefined> {
+      //   return this.courRepository.findOne({ where: { id },relations['lieu'] });
+      // }
       async findCourById(id: number): Promise<CourEntity | undefined> {
-        return this.courRepository.findOne({ where: { id } });
+        return this.courRepository.findOne({ 
+          where: { id },
+          relations: ['lieu'], // Assurez-vous que 'lieu' est le nom correct de la relation
+        });
       }
+      
 }
